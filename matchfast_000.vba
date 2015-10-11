@@ -17,17 +17,17 @@ Dim oLastRng As Range
 Dim j As Long
 Dim n As Long
 Dim Rw As Long
-Dim dTime As Long
+Dim dTime As Long  'calcolo prestazione
 
-dTime = timeGetTime
-Set oRng = Range("a1:A50000")
-Set oLastRng = oRng(oRng.Rows.Count)
+dTime = timeGetTime  'calcolo prestazione
+Set oRng = Range("a1:A50000")  
+Set oLastRng = oRng(oRng.Rows.Count) 'Questo conta il numero di celle del nuovo range (diminuisce ad ogni match trovato)
 Rw = oLastRng.Row
 On Error GoTo Finish
 With Application.WorksheetFunction
 Do
 j = .Match("X", oRng, 0)
-If oRng(j, 2).Value2 = "Y" Then n = n + 1
+If oRng(j, 2).Value2 = "Y" Then n = n + 1  'compila il valore se trovato nel range oRng
 Set oRng = Range(oRng(j + 1), oLastRng) '<<<= Rw
 End With
 
