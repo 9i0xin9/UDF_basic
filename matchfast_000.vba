@@ -24,17 +24,24 @@ Dim dTime As Long  'calcolo prestazione
 dTime = timeGetTime  'calcolo prestazione
 Set oRng = Range("a1:A50000")  
 Set oLastRng = oRng(oRng.Rows.Count) 'Questo conta il numero di celle del nuovo range (diminuisce ad ogni match trovato)
-'se A2:B3 lui restituisce 2 come su A4:A5
+'se A2:B3 lui restituisce 2 come su A4:A5 = oRng(50000) dove il valore della colonna omesso corrisponde ad 1
 Rw = oLastRng.Row
 On Error GoTo Finish
 With Application.WorksheetFunction
 Do
 'originale riga era  Set oRng = Range(oRng(j+1),oLastRng) '<<<= Rw provare con un address a vedere cosa risulta
-Set oRng = Range(Cells(oRng(j + 1), 1),Cells(Rw,2)) '<<<= Rw impostiamo il nuovo range che alla partenza sarà (0+1,50000)
-j = .Match("X", oRng, 0)  'Match(valueToMatch,arrayToCompare,matchType) risultato è un numero Double della posizione del valueToMatch all'interno dell'array, la posizione del primo elemento è 1, se nessun match è trovato #N/A
-jRow = jRow + j
-If oRng(j, 2).Value2 = "Y" Then n = n + 1  'compila il valore se trovato nel range oRng
-Loop Until jRow + 1 > Rw
+'prima prova fattaSet oRng = Range(Cells(oRng(j + 1), 1),Cells(Rw,2)) '<<<= Rw impostiamo il nuovo range che alla partenza 
+'sarà (0+1,50000)
+Set oRng = Range(oRng(j+1),oLastRng(Rw)) 'altra prova il numero delle colonne resta sottointeso 1
+j = .Match("X", oRng, 0)  'Match(valueToMatch,arrayToCompare,matchType) risultato è un numero Double della posizione del 
+'valueToMatch all'interno dell'array, la posizione del primo elemento è 1, se nessun match è trovato #N/A
+jRow = jRow + j 'se ho ben capito dovrebbe restituire la somma righe dei match trovati che resettandosi il range dovrebbe 
+'corrispondere alla riga vera del primo range A1:A50000
+If oRng(j, 2).Value2 = "Y" Then n = n + 1  'verifica seconda se il valore trovato nel range oRng ha la seconda corrispondenza 
+'nella colonna B se si aumenta il contatore n di 1
+Loop Until jRow + 1 > Rw 'Esegue il loop fino a quando l ultima corrispondenza trovata +1 è maggiore di Rw (50000?) dovrebbe 
+'essere statico all'interno del loop non è presente, controllare! come fa a risultare maggiore se non viene trovata un ultima 
+'corrispondenza sull'ultima riga?
 End With
 
 Finish:
