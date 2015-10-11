@@ -26,7 +26,7 @@ Rw = oLastRng.Row
 On Error GoTo Finish
 With Application.WorksheetFunction
 Do
-j = .Match("X", oRng, 0)
+j = .Match("X", oRng, 0)  'Match(valueToMatch,arrayToCompare,matchType) risultato è un numero Double della posizione del valueToMatch all'interno dell'array, la posizione del primo elemento è 1, se nessun match è trovato #N/A
 If oRng(j, 2).Value2 = "Y" Then n = n + 1  'compila il valore se trovato nel range oRng
 Set oRng = Range(oRng(j + 1), oLastRng) '<<<= Rw
 End With
