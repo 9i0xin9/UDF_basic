@@ -56,15 +56,22 @@ For k = LBound(rngs) To UBound(rngs)
    arr1(lcount1) = rngs(k)    'Compilo l'array
    lcount1 = lcount1 + 1
  Else
- If VarType(rngs(k)) < 2 Then Exit Function
+ If VarType(rngs(k)) < 2 and VarType(rngs(k)) <> 8192 Then Exit Function
    ReDim Preserve arr2(lcount2)
-   arr2(lcount2) = rngs(k)    'Compilo l'array
+   arr2(lcount2) = rngs(k)    'Compilo l'array ottengo i valori che non sono un range e non sono vuoti o un array (sono i valori di comparazione)
    lcount2 = lcount2 + 1
  End If
 ' End If
  
 Next k
 
-MsgBox "Final " & UBound(arr1) & " " & UBound(arr2)
+'MsgBox "Final " & UBound(arr1) & " " & UBound(arr2) 'se arr1 e arr2 lunghi uguali procedi con la funzione
+If Ubound(arr1) <> UBound(arr2) then goto errorMsg-comp
+
+Exit Function
+errorMsg-comp:
+MsgBox "i parametri inseriti non sono corretti"
+MsgBox join(arr1, vbTab) & chr(10) _
+& join(arr2, vbTab)
 
 End Function
