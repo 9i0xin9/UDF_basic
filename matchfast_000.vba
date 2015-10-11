@@ -10,6 +10,8 @@
 'Another surprise was the speed increase when I replaced your range.resize code line with a different range callout.
 'This came up about 18% faster…
 
+'!!!!!!ATTENZIONE stiamo cercando il match tra colonna A e B quando A contiene "X" e nella stessa riga B contiene "Y" il risultato n è il numero di presenze
+
 '— code starts
 Sub FindXY333()
 Dim oRng As Range
