@@ -28,7 +28,8 @@ Rw = oLastRng.Row
 On Error GoTo Finish
 With Application.WorksheetFunction
 Do
-Set oRng = Range(oRng(j + 1), oLastRng) '<<<= Rw
+'originale riga era  Set oRng = Range(oRng(j+1),oLastRng) '<<<= Rw provare con un address a vedere cosa risulta
+Set oRng = Range(Cells(oRng(j + 1), 1),Cells(Rw,2)) '<<<= Rw impostiamo il nuovo range che alla partenza sarà (0+1,50000)
 j = .Match("X", oRng, 0)  'Match(valueToMatch,arrayToCompare,matchType) risultato è un numero Double della posizione del valueToMatch all'interno dell'array, la posizione del primo elemento è 1, se nessun match è trovato #N/A
 jRow = jRow + j
 If oRng(j, 2).Value2 = "Y" Then n = n + 1  'compila il valore se trovato nel range oRng
