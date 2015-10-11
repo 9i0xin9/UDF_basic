@@ -18,7 +18,7 @@
 'Questa la base ricavata da https://fastexcel.wordpress.com/2011/10/26/match-vs-find-vs-variant-array-vba-performance-shootout/
 'L'idea adesso e' quella di ricreare un CountIfs personalizzato
 
-Public Function countIfs_fast2(ParamArray rngs() As Variant)
+Public Function countIfs_speed(ParamArray rngs() As Variant)
 
 '0      Empty (unitialized)
 '1      Null (no valid data)
@@ -66,7 +66,5 @@ For k = LBound(rngs) To UBound(rngs)
 Next k
 
 MsgBox "Final " & UBound(arr1) & " " & UBound(arr2)
- 
-
 
 End Function
