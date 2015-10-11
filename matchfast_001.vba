@@ -18,7 +18,7 @@
 'Questa la base ricavata da https://fastexcel.wordpress.com/2011/10/26/match-vs-find-vs-variant-array-vba-performance-shootout/
 'L'idea adesso e' quella di ricreare un CountIfs personalizzato
 
-Public Function countIfs_speed(ParamArray rngs() As Variant)
+Public Function countIfs_speed(rng0 as Range, con0 as Variant, ParamArray rngs() As Variant)
 
 '0      Empty (unitialized)
 '1      Null (no valid data)
@@ -40,33 +40,40 @@ Public Function countIfs_speed(ParamArray rngs() As Variant)
 '8204   Range
 '8192   Array
 
+
+
 Dim arr1(), arr2()
 Dim k As Long, lcount1 As Long, lcount2 As Long
 
-For k = LBound(rngs) To UBound(rngs)
+ReDim Preserve arr1(lcount1)
+arr1(lcount1) = rng0
+lcount1 = 1
 
- 'MsgBox IsArray(rngs(k)) & VarType(rngs(k))
- 'On Error Resume Next
- 'MsgBox rngs(k).Address
- 'If Not rngs(k) Is Nothing Then
+ReDim Preserve arr2(lcount2)
+arr2(lcount2) = con0
+lcount2 = 1
+
+For k = LBound(rngs) To UBound(rngs) 
  
  If VarType(rngs(k)) = 8204 Then
-'  If UBound(rngs(k)) > 0 Then
-   ReDim Preserve arr1(lcount1)
-   arr1(lcount1) = rngs(k)    'Compilo l'array
-   lcount1 = lcount1 + 1
- Else
- If VarType(rngs(k)) < 2 and VarType(rngs(k)) <> 8192 Then Exit Function
-   ReDim Preserve arr2(lcount2)
-   arr2(lcount2) = rngs(k)    'Compilo l'array ottengo i valori che non sono un range e non sono vuoti o un array (sono i valori di comparazione)
-   lcount2 = lcount2 + 1
+
+    ReDim Preserve arr1(lcount1)
+    arr1(lcount1) = rngs(k)    'Compilo l'array dei ranges
+    lcount1 = lcount1 + 1
+
+  Else
+
+  If VarType(rngs(k)) < 2 and VarType(rngs(k)) <> 8192 Then errorMsg-comp 'se vuoti o array vai al messaggio di errore
+
+    ReDim Preserve arr2(lcount2)
+    arr2(lcount2) = rngs(k)    'Compilo l'array delle condizioni
+    lcount2 = lcount2 + 1
+
  End If
-' End If
  
 Next k
 
-'MsgBox "Final " & UBound(arr1) & " " & UBound(arr2) 'se arr1 e arr2 lunghi uguali procedi con la funzione
-If Ubound(arr1) <> UBound(arr2) then goto errorMsg-comp
+If Ubound(arr1) <> UBound(arr2) then goto errorMsg-comp 'se arr1 e arr2 lunghi uguali procedi con la funzione altrimenti vai al messaggio di errrore
 
 Exit Function
 errorMsg-comp:
