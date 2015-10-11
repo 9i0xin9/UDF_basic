@@ -58,7 +58,8 @@ For k = LBound(rngs) To UBound(rngs)
  If VarType(rngs(k)) = 8204 Then
 
     ReDim Preserve arr1(lcount1)
-    arr1(lcount1) = rngs(k)    'Compilo l'array dei ranges
+    arr1(lcount1) = rngs(k)   'Compilo l'array dei ranges
+    ' come compilare l arrV con i valori (ricostruire un redim preserve 2d) se trova altri ranges redim e aggiunge i valori nel nuovo spazio 
     lcount1 = lcount1 + 1
 
   Else
@@ -74,6 +75,23 @@ For k = LBound(rngs) To UBound(rngs)
 Next k
 
 If Ubound(arr1) <> UBound(arr2) then goto errorMsg-comp 'se arr1 e arr2 lunghi uguali procedi con la funzione altrimenti vai al messaggio di errrore
+
+'************************************************************************************
+'Adesso dobbiamo settare l'array 2d con i valori dei ranges o forse l abbiamo settato alla compilazione
+'es. Dim arrV(1 to maxCellaRanges, 1 to Ubound(arr1)+1))
+'
+'
+'for v = 0 to maxCellaRanges-1
+' for h = Lbound(arr1) to Ubound(arr1)
+'  arrV(v,h+1) = arr1(h).value2 'qua dovrebbero venir abbinate le voci ricordarsi di scartare se stringa e se numerico per le condizioni diverse
+'es. se stringa con > o < e numero allora nel range filtriamo dei numeri altrimenti delle stringhe
+'!!! la condizione di verifica deve avvenire all'interno di questo ciclo con la compilazione
+' obbligatoriamente quindi dobbiamo inserire il ciclo dei range all interno del ciclo celle (prima v e dopo h)
+' next h
+'next v
+'************************************************************************************
+
+
 
 Exit Function
 errorMsg-comp:
