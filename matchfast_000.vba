@@ -20,9 +20,9 @@ Dim oLastRng As Range
 Dim j As Long
 Dim n As Long
 Dim Rw As Long
-Dim dTime As Long  'calcolo prestazione
+'Dim dTime As Long  'calcolo prestazione attiva solo se hai la funzione timeGetTime
 
-dTime = timeGetTime  'calcolo prestazione
+'dTime = timeGetTime  'calcolo prestazione attiva solo se hai la funzione timeGetTime
 Set oRng = Range("a1:A50000")  
 Set oLastRng = oRng(oRng.Rows.Count) 'Questo conta il numero di celle del nuovo range (diminuisce ad ogni match trovato)
 'se A2:B3 lui restituisce 2 come su A4:A5 = oRng(50000) dove il valore della colonna omesso corrisponde ad 1
@@ -46,7 +46,8 @@ Loop Until jRow + 1 > Rw 'Esegue il loop fino a quando l ultima corrispondenza t
 End With
 
 Finish:
-MsgBox TellMeHowLong(dTime) & vbCr & n & " found"
+MsgBox n & " found"
+'MsgBox TellMeHowLong(dTime) & vbCr & n & " found" attiva solo se hai la funzione timeGetTime
 End Sub
 '— code ends
 
