@@ -24,6 +24,7 @@ Dim dTime As Long  'calcolo prestazione
 dTime = timeGetTime  'calcolo prestazione
 Set oRng = Range("a1:A50000")  
 Set oLastRng = oRng(oRng.Rows.Count) 'Questo conta il numero di celle del nuovo range (diminuisce ad ogni match trovato)
+'se A2:B3 lui restituisce 2 come su A4:A5
 Rw = oLastRng.Row
 On Error GoTo Finish
 With Application.WorksheetFunction
