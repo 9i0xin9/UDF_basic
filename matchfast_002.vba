@@ -67,7 +67,20 @@ For k = LBound(rngs) To UBound(rngs) 'usare Step 2?
     ' rngs(k) = cons(k) cnt=(ubound(rngs)+2)/2 l'idea
     ' creare un ciclo che confronta la prima colonna, se trova un match (for each elements) passa all'array successivo '. 
     ' cercando dalla stessa riga una corrispondenza ?capire se possiamo ricavare la posizione della riga nel ciclo for each
-    lcount1 = lcount1 + 1
+    '
+    ' For i = LBound(rngs(k)) to Ubound(rngs(k)
+    ' 
+    ' cntM = 0
+    'recount:
+    ' arrV = rngs(cntk)
+    ' 
+    ' if arrV(i) = rngs(cntk+1) then  'controlla se esegue il primo match
+    ' if cntK = Lbound(rngs) then cntK+2
+    ' if cntk = ubound(rngs) then cntk-2
+    ' cntM = cntM + 1
+    ' goTo recount
+    ' next
+  lcount1 = lcount1 + 1
 
   Else
 
