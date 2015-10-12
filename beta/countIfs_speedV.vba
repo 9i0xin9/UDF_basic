@@ -1,3 +1,13 @@
+'If f_con(arr1(j, 1), con1) *!check if we can obmit the "= True" Then* this operation have to be instored into a private function of comparation to understand with kind of match is searching the function will return a Boolean result.
+
+Private Function f_con(arrV as Variant, con as Variant) as Boolean
+
+
+
+
+End Function
+
+
 Public Function countIfs_speed(rng1 As Range, con1 As Variant, _
 Optional rng2 As Range, Optional con2 As Variant, _
 Optional rng3 As Range, Optional con3 As Variant, _
@@ -19,6 +29,8 @@ arr10 As Variant, arr11 As Variant, arr12 As Variant, arr13 As Variant
 Dim N As Long
 
 arr1 = rng1.Value2
+con1 = f_con(con1) 'must return an array(1) two value stored Byte number (es. 0 for =, 1 for >, 2 for <, 3 for >=, 4 for <=, 5 for <>, 6 for ><) and value to compare (include also a validating process ex. for strings admit only = match
+
  If rng2 Is Nothing Then
  N = 1
   GoTo outArr
@@ -106,6 +118,7 @@ N = 13
 outArr:
 
 
+
 vArr1 = rng1.Value
 'MsgBox N & " " & LBound(vArr1) & " " & UBound(vArr1)
 Select Case N
@@ -128,7 +141,7 @@ Next j
 
 Case 3
 For j = LBound(vArr1) To UBound(vArr1)
- If arr1(j, 1) = con1 Then
+ If arr1(j, 1) = con1 Then  'If f_con(arr1(j, 1), con1) *!check if we can obmit the "= True" Then* this operation have to be instored into a private function of comparation to understand with kind of match is searching the function will return a Boolean result.
   If arr2(j, 1) = con2 Then
    If arr3(j, 1) = con3 Then
     N = N + 1
