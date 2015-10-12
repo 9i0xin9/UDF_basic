@@ -1,25 +1,9 @@
-
-'Sub matchfast001() 'Funziona velocemente
-'Dim vArr As Variant
-'Dim j As Long
-'Dim N As Long
-'Dim dTime As Double
-'vArr = range("A1:B50000").Value2
-'For j = LBound(vArr) To UBound(vArr)
-'If vArr(j, 1) = "X" Then
-'If vArr(j, 2) = "Y" Then
-'N = N + 1
-'End If
-'End If
-'Next j
-'[C1].Value = (MicroTimer - dTime) * 1000 & " number:" & N
-'End Sub
-
 '***********************************************************
 'Questa la base ricavata da https://fastexcel.wordpress.com/2011/10/26/match-vs-find-vs-variant-array-vba-performance-shootout/
 'L'idea adesso e' quella di ricreare un CountIfs personalizzato
 
-Public Function countIfs_speed(rng0() as Variant, con0 as Variant, ParamArray rngs() As Variant)
+Public Function countIfs_speed2(ParamArray rngs() As Variant)
+
 
 '0      Empty (unitialized)
 '1      Null (no valid data)
@@ -43,16 +27,17 @@ Public Function countIfs_speed(rng0() as Variant, con0 as Variant, ParamArray rn
 
 
 
-Dim arr1(), arr2()
-Dim k As Long, lcount1 As Long, lcount2 As Long
+Dim arr1(), arr2(), arrV
+Dim k As Long, lcount1 As Long, lcount2 As Long, cntk As Long, cntM As Long, CountO As Long
 
-ReDim Preserve arr1(lcount1)
-arr1(lcount1) = rng0
-lcount1 = 1
+cntk = 0
+'ReDim Preserve arr1(lcount1)
+'arr1(lcount1) = rng0
+'lcount1 = 1
 
-ReDim Preserve arr2(lcount2)
-arr2(lcount2) = con0
-lcount2 = 1
+'ReDim Preserve arr2(lcount2)
+'arr2(lcount2) = con0
+'lcount2 = 1
 
 For k = LBound(rngs) To UBound(rngs) 'usare Step 2?
  
@@ -62,32 +47,58 @@ For k = LBound(rngs) To UBound(rngs) 'usare Step 2?
     arr1(lcount1) = rngs(k)   'Compilo l'array dei ranges
     ' come compilare l arrV con i valori (ricostruire un redim preserve 2d) se trova altri ranges redim e aggiunge i valori nel nuovo spazio
     ' provare se rngs(k).value per la condizione va bene sicuramente andrà elaborato un parsing per capire se maggiore minore, maggiore uguale minore uguale, compreso, diverso o solo numero
-    ' settare un array temporale che viaggia tra i ranges es. se incontro nella prima colonna il match alla riga 11 proseguo 
+    ' settare un array temporale che viaggia tra i ranges es. se incontro nella prima colonna il match alla riga 11 proseguo
     ' la scansione scaricando l array della prima colonna ed caricando quello della seconda?
     ' rngs(k) = cons(k) cnt=(ubound(rngs)+2)/2 l'idea
-    ' creare un ciclo che confronta la prima colonna, se trova un match (for each elements) passa all'array successivo '. 
+    ' creare un ciclo che confronta la prima colonna, se trova un match (for each elements) passa all'array successivo '.
     ' cercando dalla stessa riga una corrispondenza ?capire se possiamo ricavare la posizione della riga nel ciclo for each
     '
-    ' For i = LBound(rngs(k)) to Ubound(rngs(k)) 'possibile che non funzioni nel caso passare l array ad una variabile
-    ' 
-    ' cntM = 0
-    'recount:
-    ' arrV = rngs(cntk)
-    ' 
-    ' if arrV(i) = rngs(cntk+1) then  'controlla se esegue il primo match
-    ' if cntK = Lbound(rngs) then cntK+2 'in caso di un solo if non funzionerebbe
-    ' if cntk = ubound(rngs) then cntk-2
-    ' cntM = cntM + 1
-    ' if cntM = (Ubound(rngs)+1) / 2  Resume Next
-    ' goTo recount
-    '
-    ' next
+     For i = LBound(rngs(k)) To UBound(rngs(k)) 'possibile che non funzioni nel caso passare l array ad una variabile
+    
+     cntM = 0
+recount:
+
+'MsgBox cntk
+     ReDim arrV(UBound(rngs(cntk)))
+     arrV = rngs(cntk)
+    'MsgBox arrV(1, 1)
+'MsgBox "arrV:" & arrV(i, 1) & " rngs:" & UBound(arrV) & "  cntk:" & rngs(cntk + 1) & "  i:" & i
+    
+     If arrV(i, 1) = rngs(cntk + 1) Then 'controlla se esegue il primo match
+'MsgBox arrV(i, 1) & " " & rngs(cntk + 1)
+     Else
+     GoTo fine
+     End If
+     
+     If cntk = LBound(rngs) Then
+     cntk = cntk + 2 'in caso di un solo if non funzionerebbe
+     GoTo end_cntk
+     Else
+     End If
+'MsgBox UBound(rngs) - 1
+
+     If cntk = UBound(rngs) - 1 Then cntk = cntk - 2
+end_cntk:
+     cntM = cntM + 1
+
+     If cntM = (UBound(rngs) + 1) / 2 Then
+     CountO = CountO + 1
+          GoTo fine
+     Else
+          GoTo recount
+     End If
+    ' End If
+    ' End If
+    ' End If
+
+fine:
+     Next i
 
   lcount1 = lcount1 + 1
 
   Else
 
-  If VarType(rngs(k)) < 2 and VarType(rngs(k)) <> 8192 Then errorMsg-comp 'se vuoti o array vai al messaggio di errore
+  If VarType(rngs(k)) < 2 And VarType(rngs(k)) <> 8192 Then GoTo errorMsg_comp 'se vuoti o array vai al messaggio di errore
 
     ReDim Preserve arr2(lcount2)
     arr2(lcount2) = rngs(k)    'Compilo l'array delle condizioni
@@ -97,7 +108,7 @@ For k = LBound(rngs) To UBound(rngs) 'usare Step 2?
  
 Next k
 
-If Ubound(arr1) <> UBound(arr2) then goto errorMsg-comp 'se arr1 e arr2 lunghi uguali procedi con la funzione altrimenti vai al messaggio di errrore
+'If UBound(arr1) <> UBound(arr2) Then GoTo errorMsg_comp 'se arr1 e arr2 lunghi uguali procedi con la funzione altrimenti vai al messaggio di errrore
 
 '************************************************************************************
 'Adesso dobbiamo settare l'array 2d con i valori dei ranges o forse l abbiamo settato alla compilazione
@@ -115,9 +126,10 @@ If Ubound(arr1) <> UBound(arr2) then goto errorMsg-comp 'se arr1 e arr2 lunghi u
 '************************************************************************************
 
 
+MsgBox CountO / 2
 
-Exit Function
-errorMsg-comp:
-MsgBox "i parametri inseriti non sono corretti"
-MsgBox join(arr1, vbTab) & chr(10) _
-& join(arr2, vbTab)
+errorMsg_comp:
+'MsgBox "i parametri inseriti non sono corretti"
+'MsgBox Join(arr1, vbTab) & Chr(10)
+'& Join(arr2, vbTab)
+End Function
