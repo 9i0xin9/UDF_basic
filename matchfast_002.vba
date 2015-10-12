@@ -54,13 +54,17 @@ ReDim Preserve arr2(lcount2)
 arr2(lcount2) = con0
 lcount2 = 1
 
-For k = LBound(rngs) To UBound(rngs) 
+For k = LBound(rngs) To UBound(rngs) 'usare Step 2?
  
  If VarType(rngs(k)) = 8204 Then
 
     ReDim Preserve arr1(lcount1)
     arr1(lcount1) = rngs(k)   'Compilo l'array dei ranges
-    ' come compilare l arrV con i valori (ricostruire un redim preserve 2d) se trova altri ranges redim e aggiunge i valori nel nuovo spazio 
+    ' come compilare l arrV con i valori (ricostruire un redim preserve 2d) se trova altri ranges redim e aggiunge i valori nel nuovo spazio
+    ' provare se rngs(k).value per la condizione va bene sicuramente andrà elaborato un parsing per capire se maggiore minore, maggiore uguale minore uguale, compreso, diverso o solo numero
+    ' settare un array temporale che viaggia tra i ranges es. se incontro nella prima colonna il match alla riga 11 proseguo 
+    ' la scansione scaricando l array della prima colonna ed caricando quello della seconda?
+    ' rngs(k) = cons(k) cnt=(ubound(rngs)+2)/2 l'idea
     lcount1 = lcount1 + 1
 
   Else
