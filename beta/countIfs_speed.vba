@@ -360,4 +360,5 @@ End Select
 
 countIfs_speed = N
 
+
 End Function
