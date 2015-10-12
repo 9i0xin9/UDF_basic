@@ -1,4 +1,4 @@
-Public Function countIfs_fast(rng1 As Range, con1 As Variant, _
+Public Function countIfs_speed(rng1 As Range, con1 As Variant, _
 Optional rng2 As Range, Optional con2 As Variant, _
 Optional rng3 As Range, Optional con3 As Variant, _
 Optional rng4 As Range, Optional con4 As Variant, _
@@ -358,6 +358,6 @@ For j = LBound(vArr1) To UBound(vArr1)
 Next j
 End Select
 
-countIfs_fast = N
+countIfs_speed = N
 
 End Function
