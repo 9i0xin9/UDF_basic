@@ -65,6 +65,8 @@ For k = LBound(rngs) To UBound(rngs) 'usare Step 2?
     ' settare un array temporale che viaggia tra i ranges es. se incontro nella prima colonna il match alla riga 11 proseguo 
     ' la scansione scaricando l array della prima colonna ed caricando quello della seconda?
     ' rngs(k) = cons(k) cnt=(ubound(rngs)+2)/2 l'idea
+    ' creare un ciclo che confronta la prima colonna, se trova un match (for each elements) passa all'array successivo '. 
+    ' cercando dalla stessa riga una corrispondenza ?capire se possiamo ricavare la posizione della riga nel ciclo for each
     lcount1 = lcount1 + 1
 
   Else
