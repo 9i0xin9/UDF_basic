@@ -22,9 +22,10 @@ Private Function f_con(arrV as Variant, con as Variant) as Boolean
 'vbUserDefinedType 36 Varianti che contengono tipi definiti dall'utente
 'Omessi gli array
 
-If varType(arrV) = 8 then compareSign = 0'check just for equal comparatorSign 0 or absent
-
 Dim compareSign as Long
+
+If varType(arrV) = 8 then compareSign = 0 'check just for equal comparatorSign 0 or absent
+GoTo startCase
 
 'Classic method
 'If Left(con,2) = ">=" then 
@@ -64,6 +65,7 @@ compareSign = asc(Left(con,1))  &  asc(Mid(con,2,1))  '074 < '075 = '076 >
 '<  74 (000-177)
 ' controllare come selezionare il caso specifico rispetto al range, se scriverlo prima o dopo
 
+startCase:
 Select Case compareSign
 
 Case 76075
