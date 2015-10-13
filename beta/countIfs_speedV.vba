@@ -66,68 +66,68 @@ compareSign = asc(Left(con,1))  &  asc(Mid(con,2,1))  '074 < '075 = '076 >
 
 Select Case compareSign
 
-compareSign = 76075
-
+Case 76075
     If arrV >= Mid(con,3) Then
         f_con = TRUE
     Else
         f_con = FALSE
     End If
 
-compareSign = 74075
-
+Case 74075
     If arrV <= Mid(con,3) Then
         f_con = TRUE
     Else
         f_con = FALSE
     End If
 
-compareSign = 76076
-
+Case 76076
     If arrV <> Mid(con,3) Then
         f_con = TRUE
     Else
         f_con = FALSE
     End If
 
-compareSign = 76074
-
+Case 76074
     Dim correct As Long
     correctV = InStr(con,"|")
 
     If correctV = 0 Then
         MsgBox "invalid format for between condition Chr(10) ex. "><1.20|1.50"
     End If
-
     If arrV > Mid(con,3,correctV-3) And arrV < Mid(con,correctV+1) Then
         f_con = TRUE
     Else
         f_con = FALSE
     End If
 
-compareSign = 76000 to 76999
-
+Case 76000 to 76999
     If arrV > Mid(con,2) Then
         f_con = TRUE
     Else
         f_con = FALSE
     End If
 
-compareSign = 74000 to 74999
-
+Case 74000 to 74999
     If arrV < Mid(con,2) Then
         f_con = TRUE
     Else
         f_con = FALSE
     End If
 
-compareSign = 75000 to 75999
-
+Case 75000 to 75999
     If arrV = Mid(con,2) Then
         f_con = TRUE
     Else
         f_con = FALSE
     End If
+
+Else Case
+    If arrV = Mid(con,2) Then
+        f_con = TRUE
+    Else
+        f_con = FALSE
+    End If
+
 End Select
 
 End Function
