@@ -24,8 +24,10 @@ Private Function f_con(arrV as Variant, con as Variant) as Boolean
 
 Dim compareSign as Long
 
-If varType(arrV) = 8 then compareSign = 0 'check just for equal comparatorSign 0 or absent
-GoTo startCase
+If varType(arrV) = 8 then 
+    compareSign = 0 'check just for equal comparatorSign 0 or absent
+    GoTo startCase
+End If
 
 'Classic method
 'If Left(con,2) = ">=" then 
