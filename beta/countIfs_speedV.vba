@@ -2,8 +2,133 @@
 
 Private Function f_con(arrV as Variant, con as Variant) as Boolean
 
+'VarType(var) results
+'vbEmpty            0 Vuoto (nessuna inizializzazione)
+'vbNull             1 Null (nessun dato valido)
+'vbInteger          2 Numero intero
+'vbLong             3 Intero lungo
+'vbSingle           4 Numero a virgola mobile a precisione singola
+'vbDouble           5 Numero a virgola mobile a precisione doppia
+'vbCurrency         6 Valore di valuta
+'vbDate             7 Valore di data
+'vbString           8 Valore stringa
+'vbObject           9 Oggetto
+'vbError           10 Valore di errore
+'vbBoolean         11 Valore booleano
+'vbVariant         12 Valore Variant (utilizzato solo con matrice di varianti)
+'vbDataObject      13 Oggetto DAO (Data Access Object)
+'vbDecimal         14 Valore decimale
+'vbByte            17 Valore byte
+'vbUserDefinedType 36 Varianti che contengono tipi definiti dall'utente
+'Omessi gli array
 
+If varType(arrV) = 8 then compareSign = 0'check just for equal comparatorSign 0 or absent
 
+Dim compareSign as Long
+
+'Classic method
+If Left(con,2) = ">=" then 
+    compareSign = 3
+    GoTo endifs
+ElseIf Left(con,2) = "<=" then 
+    compareSign = 4
+    GoTo endifs
+ElseIf Left(con,2) = "<>" then 
+    compareSign = 5
+    GoTo endifs  
+ElseIf Find(con,"><") > 0 then 
+    compareSign = 6
+    GoTo endifs
+ElseIf Left(con,1) = ">"  then
+    compareSign = 1
+    GoTo endifs
+ElseIf Left(con,1) = "<"  then
+    compareSign = 2
+    GoTo endifs
+ElseIf Left(con,1) = "="  then 
+    compareSign = 0
+    GoTo endifs
+Else
+    compareSign = 0
+End If
+Endifs:
+
+'Faster method
+compareSign = asc(Left(con,1))  &  asc(Mid(con,2,1))  '074 < '075 = '076 >
+'>= 76075
+'<= 74075
+'<> 74076
+'>< 76074
+'=  75 (000-177)
+'>  76 (000-177)
+'<  74 (000-177)
+' controllare come selezionare il caso specifico rispetto al range, se scriverlo prima o dopo
+
+Select Case compareSign
+
+compareSign = 76075
+
+    If arrV >= Mid(con,3) Then
+        f_con = TRUE
+    Else
+        f_con = FALSE
+    End If
+
+compareSign = 74075
+
+    If arrV <= Mid(con,3) Then
+        f_con = TRUE
+    Else
+        f_con = FALSE
+    End If
+
+compareSign = 76076
+
+    If arrV <> Mid(con,3) Then
+        f_con = TRUE
+    Else
+        f_con = FALSE
+    End If
+
+compareSign = 76074
+
+Dim correct As Long
+correctV = InStr(con,"|")
+
+If correctV = 0 Then
+    MsgBox "invalid format for between condition Chr(10) ex. "><1.20|1.50"
+End If
+
+    If arrV > Mid(con,3,correctV-3) And arrV < Mid(con,correctV+1) Then
+        f_con = TRUE
+    Else
+        f_con = FALSE
+    End If
+
+compareSign = 76000 to 76999
+
+    If arrV > Mid(con,2) Then
+        f_con = TRUE
+    Else
+        f_con = FALSE
+    End If
+
+compareSign = 74000 to 74999
+
+    If arrV < Mid(con,2) Then
+        f_con = TRUE
+    Else
+        f_con = FALSE
+    End If
+
+compareSign = 75000 to 75999
+
+    If arrV = Mid(con,2) Then
+        f_con = TRUE
+    Else
+        f_con = FALSE
+    End If
+End Select
 
 End Function
 
