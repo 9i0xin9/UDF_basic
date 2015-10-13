@@ -254,7 +254,7 @@ Select Case N
 
 Case 1
 For j = LBound(vArr1) To UBound(vArr1)
- If arr1(j, 1) = con1 Then
+ If f_con(arr1(j, 1), con1) Then  'Modifica in tutti
   N = N + 1
  End If
 Next j
