@@ -27,31 +27,31 @@ If varType(arrV) = 8 then compareSign = 0'check just for equal comparatorSign 0 
 Dim compareSign as Long
 
 'Classic method
-If Left(con,2) = ">=" then 
-    compareSign = 3
-    GoTo endifs
-ElseIf Left(con,2) = "<=" then 
-    compareSign = 4
-    GoTo endifs
-ElseIf Left(con,2) = "<>" then 
-    compareSign = 5
-    GoTo endifs  
-ElseIf Find(con,"><") > 0 then 
-    compareSign = 6
-    GoTo endifs
-ElseIf Left(con,1) = ">"  then
-    compareSign = 1
-    GoTo endifs
-ElseIf Left(con,1) = "<"  then
-    compareSign = 2
-    GoTo endifs
-ElseIf Left(con,1) = "="  then 
-    compareSign = 0
-    GoTo endifs
-Else
-    compareSign = 0
-End If
-Endifs:
+'If Left(con,2) = ">=" then 
+'    compareSign = 3
+'    GoTo endifs
+'ElseIf Left(con,2) = "<=" then 
+'    compareSign = 4
+'    GoTo endifs
+'ElseIf Left(con,2) = "<>" then 
+'    compareSign = 5
+'    GoTo endifs  
+'ElseIf Find(con,"><") > 0 then 
+'    compareSign = 6
+'    GoTo endifs
+'ElseIf Left(con,1) = ">"  then
+'    compareSign = 1
+'    GoTo endifs
+'ElseIf Left(con,1) = "<"  then
+'    compareSign = 2
+'    GoTo endifs
+'ElseIf Left(con,1) = "="  then 
+'    compareSign = 0
+'    GoTo endifs
+'Else
+'    compareSign = 0
+'End If
+'Endifs:
 
 'Faster method
 compareSign = asc(Left(con,1))  &  asc(Mid(con,2,1))  '074 < '075 = '076 >
