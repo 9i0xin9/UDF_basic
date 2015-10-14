@@ -22,41 +22,23 @@ Private Function f_con(arrV as Variant, con as Variant) as Boolean
 'vbUserDefinedType 36 Varianti che contengono tipi definiti dall'utente
 'Omessi gli array
 
-Dim compareSign as Long
+Dim compareSign as Long, vType as Long
 
-If varType(arrV) = 8 then 
-    compareSign = 0 'check just for equal comparatorSign 0 or absent
+vType = varType(arrV)
+
+If vType < 2 then
+    GoTo errNull
+End If
+
+If vType = 8 then
+    compareSign = asc(Left(con,1))  &  asc(Mid(con,2,1))
+    If compareSign <> 74076 Then
+        compareSign = 75000
+    End If
     GoTo startCase
 End If
 
-'Classic method
-'If Left(con,2) = ">=" then 
-'    compareSign = 3
-'    GoTo endifs
-'ElseIf Left(con,2) = "<=" then 
-'    compareSign = 4
-'    GoTo endifs
-'ElseIf Left(con,2) = "<>" then 
-'    compareSign = 5
-'    GoTo endifs  
-'ElseIf Find(con,"><") > 0 then 
-'    compareSign = 6
-'    GoTo endifs
-'ElseIf Left(con,1) = ">"  then
-'    compareSign = 1
-'    GoTo endifs
-'ElseIf Left(con,1) = "<"  then
-'    compareSign = 2
-'    GoTo endifs
-'ElseIf Left(con,1) = "="  then 
-'    compareSign = 0
-'    GoTo endifs
-'Else
-'    compareSign = 0
-'End If
-'Endifs:
 
-'Faster method
 compareSign = asc(Left(con,1))  &  asc(Mid(con,2,1))  '074 < '075 = '076 >
 '>= 76075
 '<= 74075
@@ -84,7 +66,7 @@ Case 74075
         f_con = FALSE
     End If
 
-Case 76076
+Case 74076
     If arrV <> Mid(con,3) Then
         f_con = TRUE
     Else
@@ -133,6 +115,10 @@ Else Case
     End If
 
 End Select
+
+Exit Function
+errNull:
+msgBox ("Err: i dati di comparazione non corrispondono ad ogni range")
 
 End Function
 
