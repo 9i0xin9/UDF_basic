@@ -32,8 +32,13 @@ End If
 
 If vType = 8 then
     compareSign = asc(Left(con,1))  &  asc(Mid(con,2,1))
-    If compareSign <> 74076 Then
+    If compareSign = 74076 Then
+    GoTo startCase
+        If compareSign = 77163 Or If compareSign = 77123 Then
+        GoTo startCase        
+        Else
         compareSign = 75000
+        End If
     End If
     GoTo startCase
 End If
@@ -47,10 +52,27 @@ compareSign = asc(Left(con,1))  &  asc(Mid(con,2,1))  '074 < '075 = '076 >
 '=  75 (000-177)
 '>  76 (000-177)
 '<  74 (000-177)
+'?  77
+'s  163
+'S  123
 ' controllare come selezionare il caso specifico rispetto al range, se scriverlo prima o dopo
 
 startCase:
 Select Case compareSign
+
+Case 77163  'Count all empty cells in range con = ?s
+    If arrV = vbNullString Then
+        f_con = TRUE
+    Else
+        f_con = FALSE
+    End If
+
+Case 77123  'Count all non empty cells in range con = ?S
+    If arrV <> vbNullString Then
+        f_con = TRUE
+    Else
+        f_con = FALSE
+    End If
 
 Case 76075
     If arrV >= Mid(con,3) Then
