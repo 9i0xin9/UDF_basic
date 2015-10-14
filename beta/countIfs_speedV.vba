@@ -100,7 +100,7 @@ Case 76074
     correctV = InStr(con,"|")
 
     If correctV = 0 Then
-        MsgBox "invalid format for between condition Chr(10) ex. ><1.20|1.50"
+        GoTo errInv
     End If
     If arrV > Mid(con,3,correctV-3) And arrV < Mid(con,correctV+1) Then
         f_con = TRUE
@@ -138,9 +138,12 @@ Else Case
 
 End Select
 
-Exit Function
+GoTo Exit Function
 errNull:
-msgBox ("Err: i dati di comparazione non corrispondono ad ogni range")
+msgBox ("Err: i dati di comparazione non corrispondono ad ogni range",64,"Err.Null")
+GoTo Exit Function
+errInv:
+MsgBox ("invalid format for between condition Chr(10) ex. ""><1.20|1.50""",64,"Err.Inv")
 
 End Function
 
