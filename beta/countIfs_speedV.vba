@@ -144,7 +144,6 @@ arr10 As Variant, arr11 As Variant, arr12 As Variant, arr13 As Variant
 Dim N As Long
 
 arr1 = rng1.Value2
-con1 = f_con(con1) 'must return an array(1) two value stored Byte number (es. 0 for =, 1 for >, 2 for <, 3 for >=, 4 for <=, 5 for <>, 6 for ><) and value to compare (include also a validating process ex. for strings admit only = match
 
  If rng2 Is Nothing Then
  N = 1
@@ -235,7 +234,6 @@ outArr:
 
 
 vArr1 = rng1.Value
-'MsgBox N & " " & LBound(vArr1) & " " & UBound(vArr1)
 Select Case N
 
 Case 1
