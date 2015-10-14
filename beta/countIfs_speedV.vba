@@ -140,7 +140,7 @@ End Select
 
 GoTo Exit Function
 errNull:
-msgBox ("Err: i dati di comparazione non corrispondono ad ogni range",64,"Err.Null")
+MsgBox ("Err: i dati di comparazione non corrispondono ad ogni range",64,"Err.Null")
 GoTo Exit Function
 errInv:
 MsgBox ("invalid format for between condition Chr(10) ex. ""><1.20|1.50""",64,"Err.Inv")
